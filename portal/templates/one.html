@@ -8,17 +8,17 @@
 		}
 		img#id_isro{
 			float:left;
-			padding-left: 3%;
+			padding-left: 2.5%;
 			margin-top:0;
 			height:85px;
 		}
 		img#id_iirs{
 			float:right;
-			padding-right: 3%;
+			padding-right: 2.5%;
 			margin-top:0;
 			width:80px;
 		}
-		img#space{
+		img#image_data{
 			float:right;
 			padding-right: 20px;
 			margin-top:0;
@@ -33,9 +33,12 @@
 		}	
 		div#div1{
 			border-style:solid;
-			max-width:600px;
+			max-width:40%;
 			padding-bottom:10px;
 			padding:20px;
+		}
+		input[type="number"] {
+   			width:17%;
 		}
 	</style>
 	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
@@ -49,12 +52,26 @@
 <div id="div1">	
 		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" type="number" value="79.0" step="0.01" required />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	   Year :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- 		 <input type="range" id="input_year" min="1990" max="2015" step="5" value="1990" style="width:150px" oninput="showValue(this)">
-  		 <output id="result" for="input_year">1990</output><br/><br/>
+ 		 <input type="range" id="input_year" min="1990" max="2015" step="5" value="1990" style="width:150px" oninput="showValue(this)" list="ticks1">
+  		 <datalist id="ticks1">
+			<option>1990</option>
+			<option>1995</option>
+			<option>2000</option>
+			<option>2005</option>
+			<option>2010</option>
+			<option>2015</option>
+		</datalist>
+	     <output id="result" for="input_year">1990</output><br/><br/>
 		<label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Layer no. :
-  		<input type="range" id="input_layer" min="1" max="4" step="1" value="1" style="width:100px" oninput="showValue(this)">
- 	    <output id="result2" for="input_layer">1</output><br/><br/>
+  		<input type="range" id="input_layer" min="1" max="4" step="1" value="1" style="width:100px" oninput="showValue(this)" list="ticks2">
+ 	     <datalist id="ticks2">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		</datalist>
+	    <output id="result2" for="input_layer">1</output><br/><br/>
 		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Product :&nbsp;&nbsp;&nbsp;&nbsp;
 		<select id="product" onchange="showValue(this)">
