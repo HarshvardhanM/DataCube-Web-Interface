@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response,render
 from django.http import HttpResponseRedirect,Http404,HttpResponse
-import json
+import json,random
 import matplotlib.pyplot as plt
 import datacube
 from .forms import *
@@ -38,7 +38,7 @@ def AJAXHandle(request):
 		y1 = float(request.POST['y1'])
 		y2 = float(request.POST['y2'])
 		imsource = plot(year,layer,x1,x2,y1,y2)
-		response = {'status': 1, 'message': imsource} 
+		response = {'status': 1, 'message': imsource + "?t=" + str(random.randint(1,1000))} 
 	else:
 		response = {'status': 0, 'message': "error"} 
 	return HttpResponse(json.dumps(response), content_type='application/json')
