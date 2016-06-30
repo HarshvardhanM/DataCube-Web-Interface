@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo">Let AJAX change this text.</p>
+
+<button type="button"
+onclick="loadDoc('new', myFunction)">Change Content
+</button>
+
+<script>
+function loadDoc(url, cfunc) {
+  var xhttp;
+  xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      cfunc(xhttp);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+
+function myFunction(xhttp) {
+  document.getElementById("demo").innerHTML = xhttp.responseText;
+}
+</script>
+</body>
+</html>
+
+
+h3 {
+			background-image:url("space-008.jpg");
+			color:white;
+			text-align:center;
+			font-size:25px;
+		}
+body{
+			 background-image: url("images.jpg");
+			background-repeat: repeat-x;
+		}
+
+function showValue(obj){
+			if (obj.id=="input_year") {
+			document.getElementById("result").innerHTML=obj.value;
+			 year=obj.value;
+			}
+			if (obj.id=="input_layer") {
+			document.getElementById("result2").innerHTML=obj.value;
+			 layer=obj.value;
+			}
+			if (obj.id=="product") {
+			 prod=obj.value;
+			}
+			document.getElementById("demo").innerHTML=year+" "+layer+" "+prod;
+		}
+
+document.getElementById("demo").innerHTML=year+" "+layer+" "+prod;

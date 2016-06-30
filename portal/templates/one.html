@@ -1,0 +1,136 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#id_submit{
+			text-align:center;	
+		}
+		img#id_isro{
+			float:left;
+			padding-left: 3%;
+			margin-top:0;
+			height:85px;
+		}
+		img#id_iirs{
+			float:right;
+			padding-right: 3%;
+			margin-top:0;
+			width:80px;
+		}
+		img#space{
+			float:right;
+			padding-right: 20px;
+			margin-top:0;
+			height:500px;
+			width:500px;
+		}
+		h2{
+		  font-size:35px;
+		  text-align:center;
+		  font-family:Times New Roman;
+		  max-width:1950px;	
+		}	
+		div#div1{
+			border-style:solid;
+			max-width:600px;
+			padding-bottom:10px;
+			padding:20px;
+		}
+	</style>
+	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+</head>
+<body>
+	<h2><img src="media/images/isro.jpg" id="id_isro" ></img><u>Satellite Data Cube<img src="media/images/iirs.jpg" id="id_iirs"></img><br/><br/></u></h2>
+	<p id="demo"></p>
+	<p id="demo2"></p>
+	<img id="image_data" src="{{imsource}}" height=350px width=400px></img>
+	
+<div id="div1">	
+		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" type="number" value="79.0" step="0.01" required />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   Year :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 		 <input type="range" id="input_year" min="1990" max="2015" step="5" value="1990" style="width:150px" oninput="showValue(this)">
+  		 <output id="result" for="input_year">1990</output><br/><br/>
+		<label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Layer no. :
+  		<input type="range" id="input_layer" min="1" max="4" step="1" value="1" style="width:100px" oninput="showValue(this)">
+ 	    <output id="result2" for="input_layer">1</output><br/><br/>
+		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Product :&nbsp;&nbsp;&nbsp;&nbsp;
+		<select id="product" onchange="showValue(this)">
+			<option value="Reflectance">Reflectance</output>
+			<option value="NDVI">NDVI</output>
+			<option value="LST">LST</output>
+		</select><br/><br/>
+		<label for="id_y2">y2:</label> <input id="id_y2" maxlength="8" name="y2" type="number" value="30.05" step="0.01" required/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		EPSG:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="number"  id="id_epsg" value="32644"/>
+		
+	<div id="id_submit">
+		<br/><button type="submit" id="id_submit" onclick=funct() value="Submit">Submit</button></div>
+</div>
+	<script>
+		document.getElementById("input_year").value = 1990;
+		document.getElementById("input_layer").value = 1;
+		document.getElementById("product").value = "Reflectance";
+		document.getElementById("id_epsg").value = 32644;
+		document.getElementById("id_x1").value = 79.0;
+		document.getElementById("id_x2").value = 79.05;
+		document.getElementById("id_y1").value = 30;
+		document.getElementById("id_y2").value = 30.05;
+		var year=1990, layer=1, prod="Reflectance", x1, x2, y1, y2,epsg;
+		function showValue(obj){
+			if (obj.id=="input_year") {
+			document.getElementById("result").innerHTML=obj.value;
+			 year=obj.value;
+			}
+			if (obj.id=="input_layer") {
+			document.getElementById("result2").innerHTML=obj.value;
+			 layer=obj.value;
+			}
+			if (obj.id=="product") {
+			 prod=obj.value;
+			}
+			
+		}
+
+		function funct(){
+			x1=document.getElementById("id_x1").value;
+			x2=document.getElementById("id_x2").value;
+			y1=document.getElementById("id_y1").value;
+			y2=document.getElementById("id_y2").value;
+			year=document.getElementById("input_year").value;
+			layer=document.getElementById("input_layer").value;
+			prod=document.getElementById("product").value;
+			epsg = document.getElementById("id_epsg").value;
+			if(x1==null||x1==""||x2==null||x2==""||y1==null||y1==""||y2==null||y2=="")
+				alert("Please fill missing fields!");
+			console.log("Here")
+			$.ajax({
+			type: "POST",
+			url: "/ajax/",
+			dataType: "json",
+			async: true,
+			data: {
+				csrfmiddlewaretoken: '{{csrf_token}}',
+				x1:x1,
+				x2:x2,
+				y1:y1,
+				y2:y2,
+				year:year,
+				layer:layer,
+				prod:prod,
+				epsg:epsg,
+			},
+			success: function(data) {
+				if(data.status == 1){
+					document.getElementById("image_data").src = data.message;
+				}    			
+			}	
+			
+			});
+}
+	</script>
+	
+</body>
+</html>

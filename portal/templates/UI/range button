@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<form action="action_page.php" method="get">
+  Points:
+  <input type="range" name="points" id="input" min="0" max="100" step="10" value="0" style="width:300px" onchange="showValue(this.value)">
+  
+  <output id="result" for="input">0</output>
+
+</form>
+<script>
+function showValue(newvalue){
+  document.getElementById("result").innerHTML=newvalue;
+}
+</script>
+
+
+</body>
+</html>
