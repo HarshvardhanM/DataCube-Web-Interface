@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'portal'
+    'portal',
+    'codemirror2'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,6 +97,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+CODEMIRROR_PATH = "codemirror"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -103,6 +105,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT= os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "staticinp"),
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

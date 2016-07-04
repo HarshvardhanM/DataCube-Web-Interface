@@ -65,3 +65,8 @@ def plot(year,layer,x1,x2,y1,y2):
 	plt.savefig(path)
 	plt.clf()
 	return path
+
+def CodeView(request):
+	form = CodeForm(request.POST or None)
+	context = {'form':form}
+	return render_to_response("home.html",context,context_instance = RequestContext(request))

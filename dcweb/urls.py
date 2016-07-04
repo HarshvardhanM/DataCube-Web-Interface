@@ -22,7 +22,8 @@ from django.conf import settings
 urlpatterns = patterns('portal.views',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$','Home'),
-    url(r'^ajax/','AJAXHandle')
+    url(r'^ajax/','AJAXHandle'),
+    url(r'^code/','CodeView')
     )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += patterns('',
