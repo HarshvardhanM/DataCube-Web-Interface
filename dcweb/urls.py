@@ -23,7 +23,8 @@ urlpatterns = patterns('portal.views',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$','Home'),
     url(r'^ajax/','AJAXHandle'),
-    url(r'^code/','CodeView')
+    url(r'^code/','CodeView'),
+    #url(r'^djangocodemirror-sample/', include('djangocodemirror.urls'))
     )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += patterns('',

@@ -1,0 +1,333 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		
+		img#id_isro{
+			float:left;
+			padding-left: 2.5%;
+			margin-top:0;
+			height:85px;
+		}
+		img#id_iirs{
+			float:right;
+			padding-right: 2.5%;
+			margin-top:0;
+			width:80px;
+		}
+		img#image_data{
+			float:right;
+			padding-right: 20px;
+			margin-top:9%;
+			height:75%;
+			width:50%;
+		}
+		h2{
+		  font-size:35px;
+		  text-align:center;
+		  font-family:Times New Roman;
+		  max-width:100%;
+		  font-style:italic;	
+		}
+		div#div1{
+			border-style:solid;
+			width:93%;
+			display:block;
+			text-align:center;
+			position:absolute;
+			padding:2%;
+			padding-top:1%;
+			font-size:14pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+			margin:auto;
+			margin-left:0.5%;
+		}
+		div#map{
+			float:left;
+			width:40%;
+			height:65%;
+			margin-top:12%;
+			display:block;
+			position:absolute;
+			margin-left:0.5%;
+		}
+		#input_layer{
+			height:20%;
+		}
+		input[type="number"] {
+   			width:4.5%;
+		}
+		#product{
+  			width: 100px;
+   			padding: 5px;
+   			font-size:13pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+  			height: 34px;
+  			-webkit-appearance: none;
+		}
+		#id_submit2{
+  			font-family: arial;
+  			color: #E1F5E5 !important;
+  			font-size: 17px;
+		    text-shadow: 1px 1px 0px #020302;
+		    padding: 7px 12px;
+		    -webkit-border-radius: 1px;
+		    border-radius: 1px;
+		    border: 2px solid #050A0F;
+		    background: #000000;
+        }
+		#id_submit2:hover{
+  			color: #000000 !important;
+ 			background: #F8F5FC;
+		}
+		input[type=range] {
+  			-webkit-appearance: none;
+			 margin: 10px 0;
+			 width: 100%;
+		}
+		input[type=range]:focus {
+  			 outline: none;
+		}
+		input[type=range]::-webkit-slider-runnable-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  box-shadow: 0px 0px 0px #000000;
+			  background: #C4C4C4;
+			  border-radius: 1px;
+			  border: 0px solid #000000;
+		}
+		input[type=range]::-webkit-slider-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+			  -webkit-appearance: none;
+			  margin-top: -6px;
+		}
+		input[type=range]:focus::-webkit-slider-runnable-track {
+  			  background: #C4C4C4;
+		}
+		input[type=range]::-moz-range-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  box-shadow: 0px 0px 0px #000000;
+			  background: #C4C4C4;
+			  border-radius: 1px;
+			  border: 0px solid #000000;
+		}
+		input[type=range]::-moz-range-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+		}
+		input[type=range]::-ms-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  background: transparent;
+			  border-color: transparent;
+			  color: transparent;
+		}
+		input[type=range]::-ms-fill-lower {
+			  background: #C4C4C4;
+			  border: 0px solid #000000;
+			  border-radius: 2px;
+			  box-shadow: 0px 0px 0px #000000;
+		}
+		input[type=range]::-ms-fill-upper {
+			  background: #C4C4C4;
+			  border: 0px solid #000000;
+			  border-radius: 2px;
+			  box-shadow: 0px 0px 0px #000000;
+		}
+		input[type=range]::-ms-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+		}
+		input[type=range]:focus::-ms-fill-lower {
+  			  background: #C4C4C4;
+		}
+		input[type=range]:focus::-ms-fill-upper {
+   	 		  background: #C4C4C4;
+		}
+    </style>
+	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+</head>
+<body>
+	<h2><img src="media/images/isro.jpg" id="id_isro" ></img><u>Satellite Data Cube<img src="media/images/iirs.jpg" id="id_iirs"></img><br/><br/></u></h2>	
+	<img id="image_data" src="{{imsource}}"></img>
+	<div id="map"></div>
+	
+<div id="div1">	
+		
+	    Year :&nbsp;&nbsp;&nbsp;
+ 		 <input type="range" id="input_year" min="1990" max="2015" step="5" value="1995" style="width:150px" oninput="showValue(this)" list="ticks1">
+  		 <datalist id="ticks1">
+			<option>1990</option>
+			<option>1995</option>
+			<option>2000</option>
+			<option>2005</option>
+			<option>2010</option>
+			<option>2015</option>
+		</datalist>&nbsp;&nbsp;
+	     <output id="result" for="input_year">1995</output>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	    Layer no. :&nbsp;&nbsp;&nbsp;
+  		<input type="range" id="input_layer" min="1" max="4" step="1" value="1" style="width:100px" oninput="showValue(this)" list="ticks2">
+ 	     <datalist id="ticks2">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		</datalist>&nbsp;&nbsp;
+	    <output id="result2" for="input_layer">1</output>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	    Product :&nbsp;&nbsp;&nbsp;
+		<select id="product" onchange="showValue(this)">
+			<option value="Reflectance">Reflectance</output>
+			<option value="NDVI">NDVI</output>
+			<option value="LST">LST</output>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		EPSG:&nbsp;&nbsp;&nbsp;
+		<input type="number"  id="id_epsg" value="32644"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<button type="submit" id="id_submit2" onclick=funct() value="Submit">Submit</button><br/><br/>
+		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" size="5" type="number" value="79.0" step="0.01" required />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label for="id_y2">y2:</label> <input id="id_y2" maxlength="8" name="y2" type="number" value="30.05" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+		
+	<script>
+		document.getElementById("input_year").value = 1990;
+		document.getElementById("input_layer").value = 1;
+		document.getElementById("product").value = "Reflectance";
+		document.getElementById("id_epsg").value = 32644;		
+		var year=1990, layer=1, prod="Reflectance", x1, x2, y1, y2,epsg,bounds;
+		function showValue(obj){
+			if (obj.id=="input_year") {
+			document.getElementById("result").innerHTML=obj.value;
+			 year=obj.value;
+			}
+			if (obj.id=="input_layer") {
+			document.getElementById("result2").innerHTML=obj.value;
+			 layer=obj.value;
+			}
+			if (obj.id=="product") {
+			 prod=obj.value;
+			}
+			
+		}
+
+		var map = null;
+	    function initMap() {
+	      var mapDiv = document.getElementById('map');
+	      map = new google.maps.Map(mapDiv, {	      		
+	    	  	center: {lat:29.8543441, lng: 78.8339968},
+	    	    zoom: 13
+	        });	 
+		  map.addListener('bounds_changed', function() {
+		   changebox();
+		  });
+	      }
+
+	    function changebox(){
+	    	var bd = map.getBounds().toJSON()
+	    	document.getElementById("id_x1").value = parseFloat(bd["west"]).toFixed(2);
+			document.getElementById("id_x2").value = parseFloat(bd["east"]).toFixed(2);
+			document.getElementById("id_y1").value = parseFloat(bd["south"]).toFixed(2);
+			document.getElementById("id_y2").value = parseFloat(bd["north"]).toFixed(2);
+	    }
+	    
+	    function bound(){
+	    	console.log(map.getBounds())
+	    	var x = map.getBounds().toJSON()
+	    	console.log()
+	    	$.ajax({
+			type: "POST",
+			url: "/ajax/",
+			dataType: "json",
+			async: true,
+			data: {
+				csrfmiddlewaretoken: '{{csrf_token}}',
+				bounds:x,
+				  }
+			});
+	    }
+
+
+		function funct(){
+			// x1=document.getElementById("id_x1").value;
+			// x2=document.getElementById("id_x2").value;
+			// y1=document.getElementById("id_y1").value;
+			// y2=document.getElementById("id_y2").value;
+			year=document.getElementById("input_year").value;
+			layer=document.getElementById("input_layer").value;
+			prod=document.getElementById("product").value;
+			epsg = document.getElementById("id_epsg").value;
+			bounds = map.getBounds().toJSON()
+			console.log(bounds["south"])
+			// if(x1==null||x1==""||x2==null||x2==""||y1==null||y1==""||y2==null||y2=="")
+			// 	alert("Please fill missing fields!");
+			console.log("Here")
+			$.ajax({
+			type: "POST",
+			url: "/ajax/",
+			dataType: "json",
+			async: true,
+			data: {
+				csrfmiddlewaretoken: '{{csrf_token}}',
+				// x1:x1,
+				// x2:x2,
+				// y1:y1,
+				// y2:y2,
+				year:year,
+				layer:layer,
+				prod:prod,
+				epsg:epsg,
+				bounds:bounds
+
+			},
+			success: function(data) {
+				if(data.status == 1){
+					document.getElementById("image_data").src = data.message;
+				}    			
+			}	
+			
+			});
+}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkKOjbHoyazntRDSRSrdFuxvjxFu8G0HU&callback=initMap">		
+    </script>
+</body>
+</html>
