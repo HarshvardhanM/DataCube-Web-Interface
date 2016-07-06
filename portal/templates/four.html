@@ -32,12 +32,13 @@
 		}
 		div#div1{
 			border-style:solid;
-			width:93%;
+			width:84%;
 			display:block;
-			text-align:center;
+			text-align:left;
 			position:absolute;
 			padding:2%;
 			padding-top:1%;
+			padding-left:12%;
 			font-size:14pt;
 			font-family:times new roman;
 			font-weight:bold;
@@ -50,7 +51,7 @@
 			float:left;
 			width:40%;
 			height:65%;
-			margin-top:12%;
+			margin-top:11%;
 			display:block;
 			position:absolute;
 			margin-left:0.5%;
@@ -60,6 +61,7 @@
 		}
 		input[type="number"]{
    			width:5%;
+   			font-size: 12pt;
 		}
 		#product{
   			width: 100px;
@@ -230,27 +232,27 @@
 			<option value="Reflectance">Reflectance</output>
 			<option value="NDVI">NDVI</output>
 			<option value="LST">LST</output>
-		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
 		<button type="submit" id="id_submit2" onclick=funct() value="Submit">Submit</button>
 		
 		<br/><br/>
 		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" size="5" type="number" value="79.0" step="0.01" required />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="id_y2">y2:</label> <input id="id_y2" maxlength="8" name="y2" type="number" value="30.05" step="0.01" required/>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		EPSG:&nbsp;&nbsp;&nbsp;
-		<input type="number"  id="id_epsg" value="32644"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="number"  id="id_epsg" value="32644"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 		
 		<button type="submit" id="ipython" onclick="window.open('http://172.26.91.46:9999/')" target="_blank">iPython instance</button>
 		</div>
 		
 	<script>
-		document.getElementById("input_year").value = 1990;
+		document.getElementById("input_year").value = 1995;
 		document.getElementById("input_layer").value = 1;
 		document.getElementById("product").value = "Reflectance";
 		document.getElementById("id_epsg").value = 32644;
@@ -307,6 +309,10 @@
 
 
 		function funct(){
+			x1=document.getElementById("id_x1").value;
+			x2=document.getElementById("id_x2").value;
+			y1=document.getElementById("id_y1").value;
+			y2=document.getElementById("id_y2").value;
 			year=document.getElementById("input_year").value;
 			layer=document.getElementById("input_layer").value;
 			prod=document.getElementById("product").value;
@@ -322,16 +328,14 @@
 			async: true,
 			data: {
 				csrfmiddlewaretoken: '{{csrf_token}}',
-				// x1:x1,
-				// x2:x2,
-				// y1:y1,
-				// y2:y2,
+				x1:x1,
+				x2:x2,
+				y1:y1,
+				y2:y2,
 				year:year,
 				layer:layer,
 				prod:prod,
 				epsg:epsg,
-				bounds:bounds
-
 			},
 			success: function(data) {
 				if(data.status == 1){

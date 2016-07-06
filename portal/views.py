@@ -30,20 +30,16 @@ def AJAXHandle(request):
 	print request
 	if request.is_ajax():
 		print request.POST
-		print "\n\n\n","HEERRRERRER","\n\n\n"
-		print request.POST['bounds[north]']
-		print request.POST['bounds[south]']
-		print request.POST['bounds[east]']
-		print request.POST['bounds[west]']		
+		print "\n\n\n","HEERRRERRER","\n\n\n"	
 		year = request.POST['year']
 		layer = request.POST['layer']
 		epsg = request.POST['epsg']
 		algo = request.POST['prod']
 		print "before truncating"
-		x1 = float("{0:.2f}".format(float(request.POST['bounds[west]'])))
-		x2 = float("{0:.2f}".format(float(request.POST['bounds[east]'])))
-		y1 = float("{0:.2f}".format(float(request.POST['bounds[south]'])))
-		y2 = float("{0:.2f}".format(float(request.POST['bounds[north]'])))
+		x1 = float(request.POST['x1'])
+		x2 = float(request.POST['x2'])
+		y1 = float(request.POST['y1'])
+		y2 = float(request.POST['y2'])
 		print "before call"
 		imsource = plot(year,layer,x1,x2,y1,y2,epsg,algo)
 		response = {'status': 1, 'message': imsource + "?t=" + str(random.randint(1,1000))} 
