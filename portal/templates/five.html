@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="isro.png" type="image/png" sizes="16x16">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	<title>Satellite DataCube</title>
+	<link rel="stylesheet" type="text/css" href="look.css">
+	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous">	</script>
+</head>
+<body>
+	<h2><img src="media/images/isro.jpg" id="id_isro" ></img><u>Satellite Data Cube<img src="media/images/iirs.jpg" id="id_iirs"></img><br/><br/></u></h2>	
+	<img id="image_data" src="{{imsource}}"></img>
+	<div id="map"></div>
+	<div id="div1">	
+		
+	    Year :&nbsp;&nbsp;&nbsp;
+ 		 <input type="range" id="input_year" min="1990" max="2015" step="5" value="1995" style="width:150px" oninput="showValue(this)">&nbsp;
+	     <output id="result" for="input_year">1995</output>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	    Layer no. :&nbsp;&nbsp;&nbsp;
+  		<input type="range" id="input_layer" min="1" max="4" step="1" value="1" style="width:100px" oninput="showValue(this)">&nbsp;&nbsp;
+	    <output id="result2" for="input_layer">1</output>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	    Product :&nbsp;&nbsp;
+		<select id="product" onchange="showValue(this)">
+			<option value="Reflectance">Reflectance</output>
+			<option value="NDVI">NDVI</output>
+			<option value="LST">LST</output>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		Algos :&nbsp;&nbsp;
+		<select id="algo" onchange="showValue(this)">
+			<option value="None">None</output>
+			<option value="NDVI">NDVI</output>
+			<option value="RVI">RVI</output>
+			<option value="TVI">TVI</output>
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<button type="submit" id="id_submit2" onclick=funct() value="Submit">Submit</button>
+		
+		<br/><br/>
+		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" size="5" type="number" value="79.0" step="0.01" required />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label for="id_y2">y2:</label> <input id="id_y2" maxlength="8" name="y2" type="number" value="30.05" step="0.01" required/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		EPSG:&nbsp;&nbsp;&nbsp;
+		<input type="number"  id="id_epsg" value="32644"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<button type="submit" id="ipython" onclick="window.open('http://172.26.91.46:9999/')" target="_blank">iPython instance</button>
+	</div>
+		
+	<script src="webscript.js"></script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkKOjbHoyazntRDSRSrdFuxvjxFu8G0HU&callback=initMap">		
+    </script>
+</body>
+</html>
