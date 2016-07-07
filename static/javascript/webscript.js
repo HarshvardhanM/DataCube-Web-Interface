@@ -24,7 +24,8 @@ function initMap() {
 var mapDiv = document.getElementById('map');
 map = new google.maps.Map(mapDiv, {	      		
   	center: {lat:29.8543441, lng: 78.8339968},
-    zoom: 13
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
 });
 map.addListener('bounds_changed', function() {
 changebox();
@@ -54,6 +55,21 @@ data: {
 });
 }
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 function funct(){
 	x1=document.getElementById("id_x1").value;
@@ -75,7 +91,7 @@ function funct(){
 	dataType: "json",
 	async: true,
 	data: {
-		csrfmiddlewaretoken: '{{csrf_token}}',
+		csrfmiddlewaretoken: getCookie('csrftoken'),
 		x1:x1,
 		x2:x2,
 		y1:y1,
@@ -85,7 +101,7 @@ function funct(){
 		prod:prod,
 		algo:algo,
 		epsg:epsg
-	},
+	},	
 	success: function(data) {
 		if(data.status == 1){
 			document.getElementById("image_data").src = data.message;

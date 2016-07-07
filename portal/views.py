@@ -28,38 +28,26 @@ def Home(request):
 	imsource = ''
 	context = {'imsource':imsource,
 				'form':form}
-	return render_to_response("four.html",context,context_instance = RequestContext(request))
+	return render_to_response("five.html",context,context_instance = RequestContext(request))
 
-def AJAXHandle(request):
-	print "in AJAXHandle"
-	print request
-	if request.is_ajax():
-		print request.POST
-		print "\n\n\n","HEERRRERRER","\n\n\n"	
+def AJAXHandle(request):	
+	if request.is_ajax():		
 		year = int(request.POST['year'])
 		layer = request.POST['layer']
 		epsg = request.POST['epsg']
 		prod = request.POST['prod']
-		algo = request.POST['algo']
-		print "before truncating"
+		algo = request.POST['algo']		
 		x1 = float(request.POST['x1'])
 		x2 = float(request.POST['x2'])
 		y1 = float(request.POST['y1'])
-		y2 = float(request.POST['y2'])
-		print "before call"
+		y2 = float(request.POST['y2'])		
 		imsource = plot(year,layer,x1,x2,y1,y2,epsg,prod,algo)
 		response = {'status': 1, 'message': imsource + "?t=" + str(random.randint(1,1000))} 
 	else:
 		response = {'status': 0, 'message': "error"} 
 	return HttpResponse(json.dumps(response), content_type='application/json')
 
-def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):
-	print "In Plot"
-	print x1,x2,y1,y2
-	plt.hold(False)
-	##
-	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")
-	##
+def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):	
 	if prod == "Reflectance":		
 		if algo == "None":	
 			return Reflectance(x1,x2,y1,y2,year,layer)

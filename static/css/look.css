@@ -1,0 +1,199 @@
+		img#id_isro{
+			float:left;
+			padding-left: 2.5%;
+			margin-top:0;
+			height:85px;
+		}
+		img#id_iirs{
+			float:right;
+			padding-right: 2.5%;
+			margin-top:0;
+			width:80px;
+		}
+		img#image_data{
+			float:right;
+			padding-right: 20px;
+			margin-top:10%;
+			height:75%;
+			width:50%;
+		}
+		h2{
+		  font-size:35px;
+		  text-align:center;
+		  font-family:Times New Roman;
+		  max-width:100%;
+		  font-style:italic;	
+		}
+		div#div1{
+			border-style:solid;
+			width:92%;
+			display:block;
+			text-align:justify;
+			position:absolute;
+			padding:2%;
+			padding-top:1%;
+			padding-left:4%;
+			font-size:14pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+			margin:auto;
+			margin-left:0.5%;
+		}
+		div#map{
+			float:left;
+			width:40%;
+			height:65%;
+			margin-top:12%; //Increased 1% (also for image_data)
+			display:block;
+			position:absolute;
+			margin-left:0.5%;
+		}
+		#input_layer{
+			height:20%;
+		}
+		input[type="number"]{
+   			width:6%;
+   			font-size: 12pt;
+		}
+		#product{
+  			width: 100px;
+   			padding: 5px;
+   			font-size:13pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+  			height: 34px;
+  			-webkit-appearance: none;
+		}
+		#algo{
+  			width: 100px;
+   			padding: 5px;
+   			font-size:13pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+  			height: 34px;
+  			-webkit-appearance: none;
+		}
+		#id_submit2{
+  			font-family: arial;
+  			color: #E1F5E5 !important;
+  			font-size: 17px;
+		    text-shadow: 1px 1px 0px #020302;
+		    padding: 7px 12px;
+		    -webkit-border-radius: 1px;
+		    border-radius: 1px;
+		    border: 2px solid #050A0F;
+		    background: #000000;
+        }
+		#ipython{
+  			font-family: arial;
+  			color: #E1F5E5 !important;
+  			font-size: 17px;
+		    text-shadow: 1px 1px 0px #020302;
+		    padding: 7px 12px;
+		    -webkit-border-radius: 1px;
+		    border-radius: 1px;
+		    border: 2px solid #050A0F;
+		    background: #000000;
+        }
+		#id_submit2:hover{
+  			color: #000000 !important;
+ 			background: #F8F5FC;
+		}
+		#ipython:hover{
+  			color: #000000 !important;
+ 			background: #F8F5FC;
+		}
+
+		input[type=range] {
+  			-webkit-appearance: none;
+			 margin: 10px 0;
+			 width: 100%;
+		}
+		input[type=range]:focus {
+  			 outline: none;
+		}
+		input[type=range]::-webkit-slider-runnable-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  box-shadow: 0px 0px 0px #000000;
+			  background: #C4C4C4;
+			  border-radius: 1px;
+			  border: 0px solid #000000;
+		}
+		input[type=range]::-webkit-slider-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+			  -webkit-appearance: none;
+			  margin-top: -6px;
+		}
+		input[type=range]:focus::-webkit-slider-runnable-track {
+  			  background: #C4C4C4;
+		}
+		input[type=range]::-moz-range-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  box-shadow: 0px 0px 0px #000000;
+			  background: #C4C4C4;
+			  border-radius: 1px;
+			  border: 0px solid #000000;
+		}
+		input[type=range]::-moz-range-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+		}
+		input[type=range]::-ms-track {
+			  width: 100%;
+			  height: 5px;
+			  cursor: pointer;
+			  animate: 0.2s;
+			  background: transparent;
+			  border-color: transparent;
+			  color: transparent;
+		}
+		input[type=range]::-ms-fill-lower {
+			  background: #C4C4C4;
+			  border: 0px solid #000000;
+			  border-radius: 2px;
+			  box-shadow: 0px 0px 0px #000000;
+		}
+		input[type=range]::-ms-fill-upper {
+			  background: #C4C4C4;
+			  border: 0px solid #000000;
+			  border-radius: 2px;
+			  box-shadow: 0px 0px 0px #000000;
+		}
+		input[type=range]::-ms-thumb {
+			  box-shadow: 0px 0px 0px #000000;
+			  border: 1px solid #080808;
+			  height: 16px;
+			  width: 16px;
+			  border-radius: 11px;
+			  background: #000000;
+			  cursor: pointer;
+		}
+		input[type=range]:focus::-ms-fill-lower {
+  			  background: #C4C4C4;
+		}
+		input[type=range]:focus::-ms-fill-upper {
+   	 		  background: #C4C4C4;
+		}

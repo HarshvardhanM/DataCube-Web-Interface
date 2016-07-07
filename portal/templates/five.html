@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="icon" href="isro.png" type="image/png" sizes="16x16">
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	<!-- <link rel="icon" href="media/images/isro.png" type="image/png" sizes="16x16"> -->
+	<link rel="shortcut icon" type="image/x-icon" href="media/images/favicon.ico"/>
 	<title>Satellite DataCube</title>
-	<link rel="stylesheet" type="text/css" href="look.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/look.css' %}">
 	<script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous">	</script>
 </head>
 <body>
@@ -52,9 +52,8 @@
 		<input type="number"  id="id_epsg" value="32644"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
 		<button type="submit" id="ipython" onclick="window.open('http://172.26.91.46:9999/')" target="_blank">iPython instance</button>
-	</div>
-		
-	<script src="webscript.js"></script>
+	</div>		
+	<script src="{% static 'javascript/webscript.js' %}"></script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkKOjbHoyazntRDSRSrdFuxvjxFu8G0HU&callback=initMap">		
     </script>
