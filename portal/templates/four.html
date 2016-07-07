@@ -74,6 +74,17 @@
   			height: 34px;
   			-webkit-appearance: none;
 		}
+		#algo{
+  			width: 100px;
+   			padding: 5px;
+   			font-size:13pt;
+			font-family:times new roman;
+			font-weight:bold;
+			font-style:italic;
+			color:black;
+  			height: 34px;
+  			-webkit-appearance: none;
+		}
 		#id_submit2{
   			font-family: arial;
   			color: #E1F5E5 !important;
@@ -197,7 +208,7 @@
 </head>
 <body>
 	<h2><img src="media/images/isro.jpg" id="id_isro" ></img><u>Satellite Data Cube<img src="media/images/iirs.jpg" id="id_iirs"></img><br/><br/></u></h2>	
-	<img id="image_data" src="{{imsource}}"></img>
+	<img id="image_data" src=""></img>
 	<div id="map"></div>
 	<div id="div2">
 	
@@ -234,7 +245,7 @@
 			<option value="LST">LST</output>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		Algos :&nbsp;&nbsp;
-		<select id="product" onchange="showValue(this)">
+		<select id="algo" onchange="showValue(this)">
 			<option value="None">None</output>
 			<option value="NDVI">NDVI</output>
 			<option value="RVI">RVI</output>
@@ -264,8 +275,9 @@
 		document.getElementById("input_year").value = 1995;
 		document.getElementById("input_layer").value = 1;
 		document.getElementById("product").value = "Reflectance";
+		document.getElementById("algo").value = "None";
 		document.getElementById("id_epsg").value = 32644;
-		var year=1990, layer=1, prod="Reflectance", x1, x2, y1, y2,epsg,bounds;
+		var year=1990, layer=1, prod="Reflectance", x1, x2, y1, y2,epsg,bounds,algo;
 		function showValue(obj){
 			if (obj.id=="input_year") {
 			document.getElementById("result").innerHTML=obj.value;
@@ -325,6 +337,7 @@
 			year=document.getElementById("input_year").value;
 			layer=document.getElementById("input_layer").value;
 			prod=document.getElementById("product").value;
+			algo=document.getElementById("algo").value;
 			epsg = document.getElementById("id_epsg").value;
 			bounds = map.getBounds().toJSON()
 			// if(x1==null||x1==""||x2==null||x2==""||y1==null||y1==""||y2==null||y2=="")
@@ -344,7 +357,8 @@
 				year:year,
 				layer:layer,
 				prod:prod,
-				epsg:epsg,
+				algo:algo,
+				epsg:epsg
 			},
 			success: function(data) {
 				if(data.status == 1){
