@@ -30,7 +30,7 @@
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
 		Algos :&nbsp;&nbsp;
-		<select id="product" onchange="showValue(this)">
+		<select id="algo" onchange="showValue(this)">
 			<option value="None">None</output>
 			<option value="NDVI">NDVI</output>
 			<option value="RVI">RVI</output>
@@ -41,15 +41,15 @@
 		
 		<br/><br/>
 		<label for="id_x1">x1:</label> <input id="id_x1" maxlength="8" name="x1" size="5" type="number" value="79.0" step="0.01" required />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <label for="id_x2">x2:</label> <input id="id_x2" maxlength="8" name="x2" type="number" value="79.05" step="0.01" required/>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="id_y1">y1:</label> <input id="id_y1" maxlength="8" name="y1" type="number" value="30" step="0.01" required/>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<label for="id_y2">y2:</label> <input id="id_y2" maxlength="8" name="y2" type="number" value="30.05" step="0.01" required/>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		EPSG:&nbsp;&nbsp;&nbsp;
-		<input type="number"  id="id_epsg" value="32644"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="number"  id="id_epsg" value="32644"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
 		<button type="submit" id="ipython" onclick="window.open('http://172.26.91.46:9999/')" target="_blank">iPython instance</button>
 	</div>
