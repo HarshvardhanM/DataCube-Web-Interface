@@ -8,6 +8,7 @@ from django.template import RequestContext
 #Datacube Imports
 import matplotlib.pyplot as plt
 import datacube
+import pyproj
 
 #Imports for RVI algo
 import numpy
@@ -21,8 +22,12 @@ import xarray as xr
 from datacube.api import API
 from datacube.ndexpr import NDexpr
 
+#*******************************************************
+from django.views.decorators.csrf import csrf_exempt
+#*******************************************************
 
 # Create your views here.
+@csrf_exempt
 def Home(request):
 	form = dataForm(request.POST or None)
 	imsource = ''
@@ -30,6 +35,7 @@ def Home(request):
 				'form':form}
 	return render_to_response("five.html",context,context_instance = RequestContext(request))
 
+@csrf_exempt
 def AJAXHandle(request):	
 	if request.is_ajax():		
 		year = int(request.POST['year'])
@@ -41,6 +47,12 @@ def AJAXHandle(request):
 		x2 = float(request.POST['x2'])
 		y1 = float(request.POST['y1'])
 		y2 = float(request.POST['y2'])		
+                utm44 = pyproj.Proj("+init=EPSG:32644")
+                gcs = pyproj.Proj("+init=EPSG:4326")
+                x1, y1 = pyproj.transform(gcs, utm44, x1, y1)
+                x2, y2 = pyproj.transform(gcs, utm44, x2, y2)
+                print x1, x2, y1, y2
+                
 		imsource = plot(year,layer,x1,x2,y1,y2,epsg,prod,algo)
 		response = {'status': 1, 'message': imsource + "?t=" + str(random.randint(1,1000))} 
 	else:
@@ -51,15 +63,15 @@ def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):
 	if prod == "Reflectance":		
 		if algo == "None":	
 			return Reflectance(x1,x2,y1,y2,year,layer)
-		elif algo == "NDVI":			
-			return NDVI(x1,x2,y1,y2,year)
-		elif algo == 'RVI' or algo == 'TVI':
+		#elif algo == "NDVI":			
+		#	return NDVI(x1,x2,y1,y2,year)
+		elif algo == 'RVI' or algo == 'TVI' or algo == 'NDVI':
 			return RVIorTVI(x1,x2,y1,y2,year,algo)
 		else:
 			return ''
 
 def Reflectance(x1, x2, y1, y2, year,layer):
-	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")
+	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
 	la = dc.load(product=get_product(year), x=(x1, x2), y=(y1,y2))
 	print la
 	if layer == "1":
@@ -87,10 +99,10 @@ def NDVI(x1, x2, y1, y2, year):
 	nd = NDexpr()
 
 	satellite = get_sat(year)
-
+	print satellite
 	data_request_descriptor = {
 		'platform': satellite,
-		'product': 'ledaps',
+		'product': 'ls8_ledaps_albers',
 		'variables': ('red', 'nir'),
 		'dimensions': {
     		'x': {
@@ -107,6 +119,7 @@ def NDVI(x1, x2, y1, y2, year):
 
 	# Retrieving data from API
 	d1 = g.get_data(data_request_descriptor)
+	print d1
 
 	b30 = d1['arrays']['red']
 	b40 = d1['arrays']['nir']
@@ -121,7 +134,7 @@ def NDVI(x1, x2, y1, y2, year):
 	return path
 
 def RVIorTVI (x1, x2, y1, y2, year,algo):
-	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")	
+	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")	
 	
 	a = AnalyticsEngine()	
 	e = ExecutionEngine()
@@ -169,6 +182,16 @@ def RVIorTVI (x1, x2, y1, y2, year,algo):
 		res = e.cache['rvi']['array_result']['rvi']
 		res.plot()
 		path = 'media/images/' +  'rvi-' + str(year) + '.png'
+	elif algo == 'NDVI':
+		ndvi = a.apply_expression([b40, b30], '((array1 - array2) / (array1 + array2))', 'ndvi')
+
+		e.execute_plan(a.plan)
+
+		#result x array
+		res = e.cache['ndvi']['array_result']['ndvi']
+		res.plot()
+		path = 'media/images/' +  'ndvi-' + str(year) + '.png'
+
 	elif algo == 'TVI':
 		#Transformed Vegetation Index
 		tvi = a.apply_expression([b40, b30], '(sqrt(((array1 - array2) / (array1 + array2)) + 0.5) * 100)', 'tvi')
