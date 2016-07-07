@@ -52,7 +52,10 @@
 		<input type="number"  id="id_epsg" value="32644"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
 		<button type="submit" id="ipython" onclick="window.open('http://172.26.91.46:9999/')" target="_blank">iPython instance</button>
-	</div>		
+	</div>
+	<script type="text/javascript">
+		var csrf_token = {{csrf_token}};
+	</script>		
 	<script src="{% static 'javascript/webscript.js' %}"></script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkKOjbHoyazntRDSRSrdFuxvjxFu8G0HU&callback=initMap">		

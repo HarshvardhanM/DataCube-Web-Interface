@@ -14,7 +14,7 @@
 			float:right;
 			padding-right: 20px;
 			margin-top:10%;
-			height:75%;
+			height:0.5%;
 			width:50%;
 		}
 		h2{
@@ -43,7 +43,7 @@
 		}
 		div#map{
 			float:left;
-			width:40%;
+			width:36.5%;
 			height:65%;
 			margin-top:12%; //Increased 1% (also for image_data)
 			display:block;

@@ -91,7 +91,7 @@ function funct(){
 	dataType: "json",
 	async: true,
 	data: {
-		csrfmiddlewaretoken: getCookie('csrftoken'),
+		csrfmiddlewaretoken: csrf_token,
 		x1:x1,
 		x2:x2,
 		y1:y1,

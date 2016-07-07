@@ -47,12 +47,12 @@ def AJAXHandle(request):
 		x2 = float(request.POST['x2'])
 		y1 = float(request.POST['y1'])
 		y2 = float(request.POST['y2'])		
-                utm44 = pyproj.Proj("+init=EPSG:32644")
-                gcs = pyproj.Proj("+init=EPSG:4326")
-                x1, y1 = pyproj.transform(gcs, utm44, x1, y1)
-                x2, y2 = pyproj.transform(gcs, utm44, x2, y2)
-                print x1, x2, y1, y2
-                
+		utm44 = pyproj.Proj("+init=EPSG:32644")
+		gcs = pyproj.Proj("+init=EPSG:4326")
+		x1, y1 = pyproj.transform(gcs, utm44, x1, y1)
+		x2, y2 = pyproj.transform(gcs, utm44, x2, y2)
+		print x1, x2, y1, y2
+
 		imsource = plot(year,layer,x1,x2,y1,y2,epsg,prod,algo)
 		response = {'status': 1, 'message': imsource + "?t=" + str(random.randint(1,1000))} 
 	else:
@@ -71,7 +71,7 @@ def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):
 			return ''
 
 def Reflectance(x1, x2, y1, y2, year,layer):
-	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
+	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")
 	la = dc.load(product=get_product(year), x=(x1, x2), y=(y1,y2))
 	print la
 	if layer == "1":
@@ -134,7 +134,7 @@ def NDVI(x1, x2, y1, y2, year):
 	return path
 
 def RVIorTVI (x1, x2, y1, y2, year,algo):
-	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")	
+	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")	
 	
 	a = AnalyticsEngine()	
 	e = ExecutionEngine()
