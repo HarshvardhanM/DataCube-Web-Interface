@@ -1,0 +1,8 @@
+*~
+
+*.pyc
+
+portal/*.pyc
+media/images/*.png
+dcweb/*pyc
+
