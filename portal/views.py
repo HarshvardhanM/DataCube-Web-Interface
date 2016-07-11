@@ -66,9 +66,14 @@ def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):
 		#elif algo == "NDVI":			
 		#	return NDVI(x1,x2,y1,y2,year)
 		elif algo == 'RVI' or algo == 'TVI' or algo == 'NDVI':
-			return RVIorTVI(x1,x2,y1,y2,year,algo)
+			return algos(x1,x2,y1,y2,year,algo)
 		else:
 			return ''
+	elif prod == "NDVI":
+		return NDVI(x1, x2, y1, y2, year)
+	elif prod == "LST":
+		return LST(x1, x2, y1, y2, year)
+
 
 def Reflectance(x1, x2, y1, y2, year,layer):
 	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")
@@ -87,54 +92,41 @@ def Reflectance(x1, x2, y1, y2, year,layer):
 		a = la.nir
 		a = a.where(a != a.attrs['nodata'])
 	print str(year)
+	a = a.where(a<1)
 	a = a.loc[str(year)]
-	a.plot()
+	a[0].plot()
 	path = 'media/images/' +  str(year) + '.png'
 	plt.savefig(path)
 	plt.clf()
 	return path
 
 def NDVI(x1, x2, y1, y2, year):	
-	g = API()
-	nd = NDexpr()
-
-	satellite = get_sat(year)
-	print satellite
-	data_request_descriptor = {
-		'platform': satellite,
-		'product': 'ls8_ledaps_albers',
-		'variables': ('red', 'nir'),
-		'dimensions': {
-    		'x': {
-        		'range': (x1,x2)
-   			},
-    		'y': {
-    	    'range': (y1,y2)
-   			},
-    		'time': {
-        		'range': (datetime(year, 1, 1), datetime(year, 12, 31))
-    		}
-		}
-	}
-
-	# Retrieving data from API
-	d1 = g.get_data(data_request_descriptor)
-	print d1
-
-	b30 = d1['arrays']['red']
-	b40 = d1['arrays']['nir']
-
-	ndvi = nd.evaluate('((b40 - b30) / (b40 + b30))')
-
-	ndvi.plot()
-
-	path = 'media/images/' +  'ndvi-' + str(year) + '.png'
+	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
+	la = dc.load(product='Output_NDVI', x = (x1, x2),y = (y1, y2))
+	a = la.NDVI.loc[str(year)]
+	a = a.where(a != a.attrs['nodata'])
+	a = a.where(a < 1)
+	a = a.where(a > -1)
+	a[0].plot()
+	path = 'media/images/' + 'prod-ndvi' + str(year) + '.png'
 	plt.savefig(path)
 	plt.clf()
 	return path
 
-def RVIorTVI (x1, x2, y1, y2, year,algo):
-	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")	
+def LST(x1, x2, y1, y2, year):
+	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
+	la = dc.load(product='Output_LST', x = (x1, x2),y = (y1, y2))
+	a = la.LST.loc[str(year)]
+	a = a.where(a != a.attrs['nodata'])
+	a = a.where(a > 220)
+	a[0].plot()
+	path = 'media/images/' + 'prod-lst' + str(year) + '.png'
+	plt.savefig(path)
+	plt.clf()
+	return path
+
+def algos (x1, x2, y1, y2, year,algo):
+	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")	
 	
 	a = AnalyticsEngine()	
 	e = ExecutionEngine()
@@ -180,7 +172,7 @@ def RVIorTVI (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['rvi']['array_result']['rvi']
-		res.plot()
+		res[0].plot()
 		path = 'media/images/' +  'rvi-' + str(year) + '.png'
 	elif algo == 'NDVI':
 		ndvi = a.apply_expression([b40, b30], '((array1 - array2) / (array1 + array2))', 'ndvi')
@@ -189,7 +181,7 @@ def RVIorTVI (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['ndvi']['array_result']['ndvi']
-		res.plot()
+		res[0].plot()
 		path = 'media/images/' +  'ndvi-' + str(year) + '.png'
 
 	elif algo == 'TVI':
@@ -200,7 +192,7 @@ def RVIorTVI (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['tvi']['array_result']['tvi']
-		res.plot()
+		res[0].plot()
 		path = 'media/images/' +  'tvi-' + str(year) + '.png'
 	else:
 		pass 	

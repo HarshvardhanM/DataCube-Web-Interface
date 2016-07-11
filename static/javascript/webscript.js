@@ -23,7 +23,7 @@ var map = null;
 function initMap() {
 var mapDiv = document.getElementById('map');
 map = new google.maps.Map(mapDiv, {	      		
-  	center: {lat:29.8543441, lng: 78.8339968},
+  	center: {lat:29.90, lng: 80.92},
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.SATELLITE
 });
@@ -39,20 +39,11 @@ document.getElementById("id_x2").value = parseFloat(bd["east"]).toFixed(2);
 document.getElementById("id_y1").value = parseFloat(bd["south"]).toFixed(2);
 document.getElementById("id_y2").value = parseFloat(bd["north"]).toFixed(2);
 }
-function bound(){
-console.log(map.getBounds())
-var x = map.getBounds().toJSON()
-console.log()
-$.ajax({
-type: "POST",
-url: "/ajax/",
-dataType: "json",
-async: true,
-data: {
-	csrfmiddlewaretoken: '{{csrf_token}}',
-	bounds:x,
-	  }
-});
+
+function bound(x,y){
+ console.log(x,y);
+ var center = new google.maps.LatLng(y,x); 
+ map.setCenter(center);
 }
 
 function getCookie(name) {
@@ -81,7 +72,7 @@ function funct(){
 	prod=document.getElementById("product").value;
 	algo=document.getElementById("algo").value;
 	epsg = document.getElementById("id_epsg").value;
-	bounds = map.getBounds().toJSON()
+	
 	// if(x1==null||x1==""||x2==null||x2==""||y1==null||y1==""||y2==null||y2=="")
 	// 	alert("Please fill missing fields!");
 	console.log("Here")
@@ -91,7 +82,7 @@ function funct(){
 	dataType: "json",
 	async: true,
 	data: {
-		csrfmiddlewaretoken: csrf_token,
+		//csrfmiddlewaretoken: csrf_token,
 		x1:x1,
 		x2:x2,
 		y1:y1,
