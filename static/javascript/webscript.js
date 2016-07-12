@@ -6,8 +6,16 @@ document.getElementById("id_epsg").value = 32644;
 var year=1990, layer=1, prod="Reflectance", x1, x2, y1, y2,epsg,bounds,algo;
 function showValue(obj){
 if (obj.id=="input_year") {
+	if (obj.value==1985){
+		document.getElementById("result").innerHTML=obj.value+4;
+		year=obj.value+4;
+	}else if(obj.value==2005){
+		document.getElementById("result").innerHTML=obj.value-2;
+		year=obj.value-2;
+	}else{
 document.getElementById("result").innerHTML=obj.value;
  year=obj.value;
+	}
 }
 if (obj.id=="input_layer") {
 document.getElementById("result2").innerHTML=obj.value;
