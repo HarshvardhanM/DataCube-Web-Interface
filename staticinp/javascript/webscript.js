@@ -76,6 +76,13 @@ function funct(){
 	y1=document.getElementById("id_y1").value;
 	y2=document.getElementById("id_y2").value;
 	year=document.getElementById("input_year").value;
+	if (year==1985){
+		document.getElementById("result").innerHTML=parseInt(year)+4;
+		year=parseInt(year)+4;
+	}else if(year==2005){
+		document.getElementById("result").innerHTML=parseInt(year)-2;
+		year=parseInt(year)-2;
+	}
 	layer=document.getElementById("input_layer").value;
 	prod=document.getElementById("product").value;
 	algo=document.getElementById("algo").value;
