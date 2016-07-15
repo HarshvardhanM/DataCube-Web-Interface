@@ -31,7 +31,7 @@ var map = null;
 function initMap() {
 var mapDiv = document.getElementById('map');
 map = new google.maps.Map(mapDiv, {	      		
-  	center: {lat:29.90, lng: 80.92},
+  	center: {lat:29.665, lng: 80.415},
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.SATELLITE
 });
@@ -71,6 +71,9 @@ function getCookie(name) {
 }
 
 function funct(){
+	submit = document.getElementById("id_submit2")
+	submit.value = 'Querying...';
+	submit.disable = true;
 	x1=document.getElementById("id_x1").value;
 	x2=document.getElementById("id_x2").value;
 	y1=document.getElementById("id_y1").value;
@@ -109,9 +112,16 @@ function funct(){
 		epsg:epsg
 	},	
 	success: function(data) {
-		if(data.status == 1){
-			document.getElementById("image_data").src = data.message;
-		}    			
+	submit = document.getElementById("id_submit2")
+	submit.value = 'Submit';
+	submit.disable = false;
+	document.getElementById("image_data").src = data.message;
+	},
+	error: function(){
+	submit = document.getElementById("id_submit2")
+	submit.value = 'Submit';
+	submit.disable = false;
+	document.getElementById("image_data").src = "media/images/nodata.jpg";
 	}	
 
 	});

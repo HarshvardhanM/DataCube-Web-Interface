@@ -6,6 +6,9 @@ from .forms import *
 from django.template import RequestContext
 
 #Datacube Imports
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import datacube
 import pyproj
@@ -62,9 +65,7 @@ def AJAXHandle(request):
 def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):	
 	if prod == "Reflectance":		
 		if algo == "None":	
-			return Reflectance(x1,x2,y1,y2,year,layer)
-		#elif algo == "NDVI":			
-		#	return NDVI(x1,x2,y1,y2,year)
+			return Reflectance(x1,x2,y1,y2,year,layer)		
 		elif algo == 'RVI' or algo == 'TVI' or algo == 'NDVI':
 			return algos(x1,x2,y1,y2,year,algo)
 		else:
@@ -77,37 +78,36 @@ def plot(year,layer,x1,x2,y1,y2,epsg,prod,algo):
 
 def Reflectance(x1, x2, y1, y2, year,layer):
 	dc = datacube.Datacube(config="/home/sharat910/.datacube.conf")
-	la = dc.load(product=get_product(year), x=(x1, x2), y=(y1,y2))
+	la = dc.load(product=get_reflectance_product(year), x=(x1, x2), y=(y1,y2))
 	print la
 	if layer == "1":
 		a = la.blue
-		a = a.where(a != a.attrs['nodata'])
 	elif layer == "2":
-		a = la.green
-		a = a.where(a != a.attrs['nodata'])		
+		a = la.green		
 	elif layer == "3":
 		a = la.red
-		a = a.where(a != a.attrs['nodata'])
 	elif layer == "4":
 		a = la.nir
-		a = a.where(a != a.attrs['nodata'])
+	a = a.where(a != a.attrs['nodata'])
 	print str(year)
 	a = a.where(a<1)
 	a = a.loc[str(year)]
-	a[0].plot()
-	path = 'media/images/' +  str(year) + '.png'
+	lay = get_right_layer(a)
+	lay.plot()
+	path = 'media/images/' +  str(year) +  '.png'
 	plt.savefig(path)
 	plt.clf()
 	return path
 
 def NDVI(x1, x2, y1, y2, year):	
 	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
-	la = dc.load(product='Output_NDVI', x = (x1, x2),y = (y1, y2))
+	la = dc.load(product=get_NDVI_product(year), x = (x1, x2),y = (y1, y2))
 	a = la.NDVI.loc[str(year)]
 	a = a.where(a != a.attrs['nodata'])
 	a = a.where(a < 1)
 	a = a.where(a > -1)
-	a[0].plot()
+	lay = get_right_layer(a)
+	lay.plot()
 	path = 'media/images/' + 'prod-ndvi' + str(year) + '.png'
 	plt.savefig(path)
 	plt.clf()
@@ -115,11 +115,12 @@ def NDVI(x1, x2, y1, y2, year):
 
 def LST(x1, x2, y1, y2, year):
 	dc = datacube.Datacube(config="/home/rishabh/.datacube.conf")
-	la = dc.load(product='Output_LST', x = (x1, x2),y = (y1, y2))
+	la = dc.load(product=get_LST_product(year), x = (x1, x2),y = (y1, y2))
 	a = la.LST.loc[str(year)]
 	a = a.where(a != a.attrs['nodata'])
 	a = a.where(a > 220)
-	a[0].plot()
+	lay = get_right_layer(a)
+	lay.plot()
 	path = 'media/images/' + 'prod-lst' + str(year) + '.png'
 	plt.savefig(path)
 	plt.clf()
@@ -131,7 +132,7 @@ def algos (x1, x2, y1, y2, year,algo):
 	a = AnalyticsEngine()	
 	e = ExecutionEngine()
 
-	product = get_product(year)
+	product = get_reflectance_product(year)
 	#assert product
 	#dc.list_products() is pandas dataframe, .loc[:]['name'] selects
 	#   the products is a pandas series. values is array
@@ -172,7 +173,9 @@ def algos (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['rvi']['array_result']['rvi']
-		res[0].plot()
+		lay = get_right_layer(res)
+		lay.plot()
+		
 		path = 'media/images/' +  'rvi-' + str(year) + '.png'
 	elif algo == 'NDVI':
 		ndvi = a.apply_expression([b40, b30], '((array1 - array2) / (array1 + array2))', 'ndvi')
@@ -181,7 +184,8 @@ def algos (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['ndvi']['array_result']['ndvi']
-		res[0].plot()
+		lay = get_right_layer(res)
+		lay.plot()
 		path = 'media/images/' +  'ndvi-' + str(year) + '.png'
 
 	elif algo == 'TVI':
@@ -192,7 +196,8 @@ def algos (x1, x2, y1, y2, year,algo):
 
 		#result x array
 		res = e.cache['tvi']['array_result']['tvi']
-		res[0].plot()
+		lay = get_right_layer(res)
+		lay.plot()
 		path = 'media/images/' +  'tvi-' + str(year) + '.png'
 	else:
 		pass 	
@@ -200,30 +205,39 @@ def algos (x1, x2, y1, y2, year,algo):
 	plt.clf()
 	return path
 
-def reductionTime(start_year,end_year,operation):
-	from datetime import datetime
-	from datacube.analytics.analytics_engine import AnalyticsEngine
-	from datacube.execution.execution_engine import ExecutionEngine
-	from datacube.analytics.utils.analytics_utils import plot
+def get_right_layer(array):
+	import numpy as np
+	for i in range(len(array)):
+		arr = array[i]
+		if not np.allclose(arr.where(arr == 0.0),arr):
+			return arr
+	return None
 
-	a = AnalyticsEngine()
-	e = ExecutionEngine()
-
-	dimensions = {'x':    {'range': (x1, x2)},
-	              'y':    {'range': (y1, y2)},
-	              'time': {'range': (datetime(start_year, 1, 1), datetime(end_year, 12, 31))}}
-
-	arrays = a.create_array(('LANDSAT_5', 'ledaps'), ['nir'], dimensions, 'get_data')
-
-	median = a.apply_expression(arrays, operation +'(array1, 0)', 'medianT')
-
-def get_product(year):	
+def get_reflectance_product(year):	
 	if year<=1995 or year == 2010:
 		product = 'ls5_ledaps_albers'
 	elif year<=2003:
 		product = 'ls7_ledaps_albers'
 	elif year == 2015:
 		product = 'ls8_ledaps_albers'
+	return product
+
+def get_NDVI_product(year):	
+	if year<=1995 or year == 2010:
+		product = 'Output_NDVI'
+	elif year<=2003:
+		product = 'Output_NDVI_le7'
+	elif year == 2015:
+		product = 'Output_NDVI_lc8'
+	return product
+
+def get_LST_product(year):	
+	if year<=1995 or year == 2010:
+		product = 'Output_LST'
+	elif year<=2003:
+		product = 'Output_LST_le7'
+	elif year == 2015:
+		product = 'Output_LST_lc8'
 	return product
 
 def get_sat(year):
